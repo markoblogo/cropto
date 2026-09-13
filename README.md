@@ -300,7 +300,7 @@ npm run e2e:smoke
 - Full local development requires a configured database and feature-specific env values.
 - Telegram, Sheets and on-chain flows are feature-scoped integrations; configure only the modules being tested.
 - Legal/regulatory architecture is intentionally not finalized in this repository.
-- Dependency audit still has residual risk from the Express 5 migration path and the no-fix npm release of `xlsx`. Hardhat-only findings are isolated to development tooling. See [SECURITY.md](./SECURITY.md) and [SECURITY_REPORT.md](./SECURITY_REPORT.md).
+- The production dependency audit is clean after the Express 5 migration and move to the supported SheetJS distribution. Residual audit findings are isolated to the paused Hardhat development toolchain. See [SECURITY.md](./SECURITY.md) and [SECURITY_REPORT.md](./SECURITY_REPORT.md).
 
 ## Operational Hardening Baseline
 

@@ -6,7 +6,7 @@
  */
 
 import { describe, it, expect, beforeAll, afterAll } from "@jest/globals";
-import { db } from "../server/db";
+import { db, pool } from "../server/db";
 import { indexPrices } from "../shared/schema";
 import { eq } from "drizzle-orm";
 
@@ -54,6 +54,7 @@ describe("GET /api/market-dashboard", () => {
         console.warn("Failed to clean up test data:", error);
       }
     }
+    await pool.end();
   });
 
   it("should return 200 and valid structure", async () => {
@@ -179,4 +180,3 @@ describe("GET /api/market-dashboard", () => {
     expect(usRiceRecords.length).toBe(0);
   });
 });
-

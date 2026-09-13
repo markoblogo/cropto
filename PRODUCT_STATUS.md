@@ -73,4 +73,4 @@ The current codebase includes a baseline hardening pass for prototype and partne
 - wallet lookup by user id is no longer public;
 - duplicate spot-route registration was removed from server startup.
 
-The September 2026 dependency pass removed the critical production advisory and upgraded MapLibre GL, Drizzle ORM, Nodemailer, Express 4, and PostCSS. Residual production findings are limited to the evaluated Express 5 migration path and `xlsx`, whose npm release has no upstream fix. See `SECURITY_REPORT.md` for the current boundary.
+The September 2026 dependency pass upgraded MapLibre GL, Drizzle ORM, Nodemailer, Express 5, PostCSS, and SheetJS. The production dependency audit has no reported findings. Remaining audit items belong to the paused Hardhat development toolchain and do not ship with the production dependency set. See `SECURITY_REPORT.md` for the current boundary.

@@ -1,4 +1,4 @@
-import XLSX from "xlsx";
+import * as XLSX from "xlsx";
 import { storage } from "../server/storage";
 import { isoCountryOptionsEn } from "../client/src/features/sea-brokerage-monitor/mock/isoCountryOptions.en";
 
