@@ -9,6 +9,7 @@ import {
   hasAdminPermissions,
   AuthRequest
 } from './auth';
+import { getRouteParam } from './utils/routeParam';
 
 const router = Router();
 
@@ -94,11 +95,12 @@ router.get('/:userId', authenticateToken, async (req: AuthRequest, res) => {
     if (!req.user) {
       return res.status(401).json({ error: 'Authentication required' });
     }
-    if (req.user.id !== req.params.userId && !hasAdminPermissions(req.user)) {
+    const userId = getRouteParam(req.params.userId);
+    if (req.user.id !== userId && !hasAdminPermissions(req.user)) {
       return res.status(403).json({ error: 'Forbidden' });
     }
 
-    const user = await findUserById(req.params.userId);
+    const user = await findUserById(userId);
     
     if (!user) {
       return res.status(404).json({ error: 'User not found' });

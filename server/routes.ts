@@ -62,6 +62,7 @@ import {
 } from "./services/seaBrokerageMarketUpdateFormatter";
 import { fetchAndParseProvider } from "./ingestion/sources/common";
 import { getRuntimeInfo } from "./runtimeInfo";
+import { getRouteParam } from "./utils/routeParam";
 import {
   publishSeaBrokerageEntryToTelegram,
   sendSeaBrokerageTelegramDirectMessage,
@@ -3742,7 +3743,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Serve markdown documentation files
   app.get("/api/docs/:filename", async (req, res) => {
     try {
-      const { filename } = req.params;
+      const filename = getRouteParam(req.params.filename);
       
       // Validate filename to prevent directory traversal
       if (!filename.match(/^[a-z0-9.-]+\.md$/i)) {
@@ -4354,7 +4355,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // GET /api/indexes/:slug - Get one index by slug with full price history
   app.get("/api/indexes/:slug", async (req, res) => {
     try {
-      const { slug } = req.params;
+      const slug = getRouteParam(req.params.slug);
 
       // Find the index by slug
       const [index] = await db
@@ -6274,7 +6275,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ error: "Access denied. Broker role required." });
       }
 
-      const { slug } = req.params;
+      const slug = getRouteParam(req.params.slug);
 
       // Find the index by slug
       const [index] = await db
@@ -6623,7 +6624,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/options/:id/json", authenticateToken, async (req: AuthRequest, res) => {
     try {
-      const { id } = req.params;
+      const id = getRouteParam(req.params.id);
       const option = await storage.getOptionById(id);
       if (!option) {
         return res.status(404).json({ error: "Option not found" });
@@ -6986,7 +6987,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const option = await storage.matchOption(
-        req.params.id, 
+        getRouteParam(req.params.id),
         result.data.counterpartyId,
         req.user.id
       );
@@ -7053,18 +7054,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const settlement = await storage.exerciseOption(
-        req.params.id,
+        getRouteParam(req.params.id),
         req.user.id,
         result.data.spotPrice.toString()
       );
 
       try {
-        const optionAfterExercise = await storage.getOptionById(req.params.id);
-        const subject = `Cropto: Option exercised (${optionAfterExercise?.title || req.params.id})`;
+        const optionAfterExercise = await storage.getOptionById(getRouteParam(req.params.id));
+        const subject = `Cropto: Option exercised (${optionAfterExercise?.title || getRouteParam(req.params.id)})`;
         const body = [
           `An option position has been exercised and settled.`,
           ``,
-          `Option ID: ${req.params.id}`,
+          `Option ID: ${getRouteParam(req.params.id)}`,
           `Status: EXERCISED`,
           `Spot price: ${result.data.spotPrice}`,
           `Payout: ${settlement.payout}`,
@@ -7534,7 +7535,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ error: "Unauthorized" });
       }
       
-      const { id } = req.params;
+      const id = getRouteParam(req.params.id);
       
       // Get the notification to verify ownership
       const notifications = await storage.listNotifications(req.user.id);
@@ -7589,7 +7590,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // POST /api/margin-call/:id/topup - Top up reserved collateral for a margin call
   app.post("/api/margin-call/:id/topup", authenticateToken, async (req: AuthRequest, res) => {
     try {
-      const { id } = req.params;
+      const id = getRouteParam(req.params.id);
       const { amount, currency } = req.body;
       
       if (!req.user) {
@@ -7665,7 +7666,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // POST /api/options/:id/force-settle - Force settle an option (admin only)
   app.post("/api/options/:id/force-settle", authenticateToken, async (req: AuthRequest, res) => {
     try {
-      const { id } = req.params;
+      const id = getRouteParam(req.params.id);
       const { reason } = req.body;
       
       if (!req.user) {
@@ -9747,7 +9748,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ error: "Forbidden: broker role required" });
       }
 
-      const { id } = req.params;
+      const id = getRouteParam(req.params.id);
       const updatedFeedback = await storage.updateFeedback(id, { status: "resolved" });
       res.json(updatedFeedback);
     } catch (error) {
@@ -11124,7 +11125,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const all = await readSeaBrokerageReportProfiles();
       const brokerUserId = resolveSeaBrokerageBrokerUserId(authorizedBroker).toLowerCase();
-      const profileId = String(req.params.id || "").trim();
+      const profileId = String(getRouteParam(req.params.id) || "").trim();
       const targetIndex = all.findIndex(
         (profile) => profile.id === profileId && profile.brokerUserId.toLowerCase() === brokerUserId,
       );
@@ -11177,7 +11178,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             "Broker is not authorized for monitor actions yet. Provide Telegram id/username from allowlist.",
         });
       }
-      const profileId = String(req.params.id || "").trim();
+      const profileId = String(getRouteParam(req.params.id) || "").trim();
       const brokerUserId = resolveSeaBrokerageBrokerUserId(authorizedBroker).toLowerCase();
       const all = await readSeaBrokerageReportProfiles();
       const next = all.filter(
@@ -11206,7 +11207,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const brokerUserId = resolveSeaBrokerageBrokerUserId(authorizedBroker).toLowerCase();
-      const profileId = String(req.params.id || "").trim();
+      const profileId = String(getRouteParam(req.params.id) || "").trim();
       const profiles = await readSeaBrokerageReportProfiles();
       const profile = profiles.find(
         (item) => item.id === profileId && item.brokerUserId.toLowerCase() === brokerUserId,
@@ -13128,7 +13129,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!req.user) {
         return res.status(401).json({ error: "Unauthorized" });
       }
-      const orderId = req.params.id;
+      const orderId = getRouteParam(req.params.id);
       const [order] = await db.select().from(forwardOrders).where(eq(forwardOrders.id, orderId));
       if (!order) {
         return res.status(404).json({ error: "Order not found" });
@@ -13312,7 +13313,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ error: "Forbidden: broker/admin required" });
       }
 
-      const contractId = req.params.id;
+      const contractId = getRouteParam(req.params.id);
       const [contract] = await db.select().from(forwardContracts).where(eq(forwardContracts.id, contractId));
       if (!contract) {
         return res.status(404).json({ error: "Forward contract not found" });
@@ -13562,7 +13563,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ error: "Forbidden: admin access required" });
       }
 
-      const partnerId = req.params.id;
+      const partnerId = getRouteParam(req.params.id);
 
       // Get partner details
       const partners = await storage.getPartnerOrganizations();

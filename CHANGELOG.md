@@ -7,6 +7,17 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [v1.2.1] - 2026-09-13
+
+### Security
+- Migrated the web runtime from Express 4 to Express 5.2.1.
+- Replaced the vulnerable npm `xlsx` release with the supported official SheetJS 0.20.3 distribution.
+- Updated safe transitive production dependencies and pinned Lodash 4.18.1; `npm audit --omit=dev` now reports zero findings.
+
+### Fixed
+- Updated catch-all routing and route-parameter normalization for Express 5.
+- Added an XLSX round-trip regression test for the Sea Brokerage export/import shape.
+
 ## [v1.2.0] - 2026-09-13
 
 ### Added

@@ -10,6 +10,7 @@ import {
   indexPrices,
 } from "@shared/schema";
 import { eq, desc, and } from "drizzle-orm";
+import { getRouteParam } from "./utils/routeParam";
 
 export function registerSpotRoutes(app: Express) {
   const STALE_MAX_AGE_DAYS = 7;
@@ -246,7 +247,7 @@ export function registerSpotRoutes(app: Express) {
         return res.status(401).json({ error: "Unauthorized" });
       }
       
-      const { commoditySlug } = req.params;
+      const commoditySlug = getRouteParam(req.params.commoditySlug);
       const { quantityKg } = req.body;
       
       if (!quantityKg || isNaN(parseFloat(quantityKg)) || parseFloat(quantityKg) <= 0) {
@@ -399,7 +400,7 @@ export function registerSpotRoutes(app: Express) {
         return res.status(401).json({ error: "Unauthorized" });
       }
       
-      const { commoditySlug } = req.params;
+      const commoditySlug = getRouteParam(req.params.commoditySlug);
       const { quantityKg } = req.body;
       
       if (!quantityKg || isNaN(parseFloat(quantityKg)) || parseFloat(quantityKg) <= 0) {
@@ -679,7 +680,7 @@ export function registerSpotRoutes(app: Express) {
         return res.status(401).json({ error: "Unauthorized" });
       }
       
-      const { commoditySlug } = req.params;
+      const commoditySlug = getRouteParam(req.params.commoditySlug);
       const userId = req.user.id;
       
       // Get current price per kg
