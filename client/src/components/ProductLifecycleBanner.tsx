@@ -1,7 +1,5 @@
-import { Link } from "wouter";
 import { CalendarClock, CircleSlash2, RefreshCw } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -23,23 +21,6 @@ export function ProductLifecycleBanner() {
               <p className="max-w-3xl text-sm leading-6 text-foreground/85">
                 {t("home.lifecycle.description")}
               </p>
-            </div>
-            <div className="flex shrink-0 flex-wrap items-center gap-2">
-              <Button size="sm" variant="outline" asChild>
-                <Link href="/deck">
-                  {t("home.lifecycle.actions.deck")}
-                </Link>
-              </Button>
-              <Button size="sm" variant="outline" asChild>
-                <a href="/#market-dashboard">
-                  {t("home.lifecycle.actions.market")}
-                </a>
-              </Button>
-              <Button size="sm" asChild>
-                <Link href="/feedback">
-                  {t("home.lifecycle.actions.feedback")}
-                </Link>
-              </Button>
             </div>
             <div className="grid w-full gap-1.5 text-xs text-muted-foreground md:w-auto">
               <div className="flex items-center gap-1.5">

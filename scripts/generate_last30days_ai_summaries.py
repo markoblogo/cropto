@@ -15,15 +15,15 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
 MODEL = os.environ.get("LAST30DAYS_AI_MODEL", "gpt-4.1-mini").strip()
 MONITOR_CONTEXT_URL = os.environ.get(
     "LAST30DAYS_MONITOR_CONTEXT_URL",
-    "https://cropto.abvx.xyz/api/market-dashboard?debugSources=1",
+    "https://cr0pto.com/api/market-dashboard?debugSources=1",
 ).strip()
 MONITOR_NEWS_URL = os.environ.get(
     "LAST30DAYS_MONITOR_NEWS_URL",
-    "https://cropto.abvx.xyz/api/monitor/news?time=7d",
+    "https://cr0pto.com/api/monitor/news?time=7d",
 ).strip()
 SEA_BROKERAGE_URL = os.environ.get(
     "LAST30DAYS_SEA_BROKERAGE_URL",
-    "https://cropto.abvx.xyz/api/sea-brokerage-monitor/entries",
+    "https://cr0pto.com/api/sea-brokerage-monitor/entries",
 ).strip()
 
 WINDOWS = [

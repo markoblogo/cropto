@@ -43,7 +43,8 @@ jobs:
         run: |
           mkdir -p "$HOME/.agents/skills"
           rm -rf "$HOME/.agents/skills/last30days"
-          git clone https://github.com/mvanhorn/last30days-skill.git "$HOME/.agents/skills/last30days"
+          git clone --no-checkout --filter=blob:none https://github.com/mvanhorn/last30days-skill.git "$HOME/.agents/skills/last30days"
+          git -C "$HOME/.agents/skills/last30days" checkout --detach ac0ed3b7f610ec64cc898349d1e4507cd6220942
 
       - name: Refresh snapshots
         env:
@@ -78,7 +79,7 @@ jobs:
       - name: Generate precomputed AI summaries
         env:
           LAST30DAYS_OUTPUT_DIR: artifacts/last30days
-          LAST30DAYS_MONITOR_CONTEXT_URL: https://cropto.abvx.xyz/api/market-dashboard?debugSources=1
+          LAST30DAYS_MONITOR_CONTEXT_URL: https://cr0pto.com/api/market-dashboard?debugSources=1
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LAST30DAYS_AI_MODEL: gpt-4.1-mini
         run: |

@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { useLocation } from "wouter";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
-import { useWaitlist } from "@/contexts/WaitlistContext";
 
 const DISMISS_KEY = "cropto_demo_banner_dismissed";
 
@@ -17,7 +17,7 @@ function readDismissed(): boolean {
 
 export default function DemoBanner() {
   const [location, setLocation] = useLocation();
-  const { openWaitlist } = useWaitlist();
+  const { t } = useTranslation();
 
   const isDemoMode = useMemo(() => {
     const mockEnv = (import.meta.env.VITE_MOCK_ONCHAIN || "").toLowerCase() === "true";
@@ -53,18 +53,17 @@ export default function DemoBanner() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm leading-snug">
-            <span className="font-semibold">Cropto</span> is currently in demo mode. You can sign up, trade on mock
-            balances, and send us feedback.
+            <span className="font-semibold">Cropto</span> {t("demoBanner.message")}
           </p>
 
           <div className="flex flex-wrap items-center gap-2">
+            <Button size="sm" variant="outline" onClick={() => { window.location.href = "/#market-dashboard"; }}>
+              {t("demoBanner.market")}
+            </Button>
             <Button size="sm" variant="outline" onClick={() => setLocation("/feedback")}>
-              Send feedback
+              {t("demoBanner.feedback")}
             </Button>
-            <Button size="sm" onClick={() => openWaitlist("banner")}>
-              Join waitlist
-            </Button>
-            <Button size="icon" variant="ghost" onClick={dismiss} aria-label="Dismiss banner">
+            <Button size="icon" variant="ghost" onClick={dismiss} aria-label={t("demoBanner.dismiss")}>
               <X className="h-4 w-4" />
             </Button>
           </div>
@@ -73,6 +72,4 @@ export default function DemoBanner() {
     </div>
   );
 }
-
-
 

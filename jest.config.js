@@ -1,3 +1,5 @@
+const runIntegration = process.env.RUN_INTEGRATION_TESTS === '1';
+
 export default {
   preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
@@ -9,6 +11,8 @@ export default {
   ],
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
+    '^@shared/(.*)$': '<rootDir>/shared/$1',
+    '^@/(.*)$': '<rootDir>/client/src/$1',
   },
   transform: {
     '^.+\\.tsx?$': [
@@ -18,7 +22,10 @@ export default {
       },
     ],
   },
-  testMatch: ['**/tests/**/*.test.ts'],
+  testMatch: runIntegration
+    ? ['**/tests/marketDashboard.test.ts']
+    : ['**/tests/**/*.test.ts'],
+  testPathIgnorePatterns: runIntegration ? [] : ['/tests/marketDashboard.test.ts$'],
   collectCoverageFrom: [
     'server/**/*.ts',
     '!server/**/*.d.ts',

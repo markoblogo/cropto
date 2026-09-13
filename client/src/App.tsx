@@ -8,43 +8,44 @@ import { WaitlistProvider } from "@/contexts/WaitlistContext";
 import DemoBanner from "@/components/DemoBanner";
 import { AuthPromptGateway } from "@/components/AuthPromptGateway";
 import GeoLanguageToast from "@/components/GeoLanguageToast";
-import Dashboard from "@/pages/Dashboard";
-import Portfolio from "@/pages/Portfolio";
-import OptionChain from "@/pages/OptionChain";
-import SpotTrading from "@/pages/SpotTrading";
-import MarketData from "@/pages/MarketData";
-import DesignArchitecture from "@/pages/DesignArchitecture";
-import PartnersContracts from "@/pages/PartnersContracts";
-import OnchainTx from "@/pages/OnchainTx";
-import Wallet from "@/pages/Wallet";
-import Education from "@/pages/Education";
-import Testing from "@/pages/Testing";
-import Login from "@/pages/Login";
-import Register from "@/pages/Register";
-import Admin from "@/pages/Admin";
-import AdminFeedback from "@/pages/AdminFeedback";
-import AdminReconciliation from "@/pages/AdminReconciliation";
-import AdminIndex from "@/pages/AdminIndex";
-import RiskDashboard from "@/pages/RiskDashboard";
-import AdminPartners from "@/pages/AdminPartners";
-import AdminFees from "@/pages/AdminFees";
-import AdminAudit from "@/pages/AdminAudit";
-import IndexDetail from "@/pages/IndexDetail";
-import Feedback from "@/pages/Feedback";
-import ForwardMarket from "@/pages/ForwardMarket";
-import OptionForwardChainPage from "@/pages/OptionForwardChainPage";
-import AdminWaitlist from "@/pages/AdminWaitlist";
-import Arbitrage from "@/pages/Arbitrage";
-import NotFound from "@/pages/not-found";
-import PrivacyPolicy from "@/pages/PrivacyPolicy";
-import TermsOfUse from "@/pages/TermsOfUse";
-import RiskDisclosure from "@/pages/RiskDisclosure";
-import DeckPage from "@/pages/Deck";
-import MonitorPage from "@/pages/Monitor";
-import MonitorV3Page from "@/pages/MonitorV3";
-import SpikeMonitorPage from "@/pages/SpikeMonitor";
-import Last30DaysPage from "@/pages/Last30Days";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
+
+const Dashboard = lazy(() => import("@/pages/Dashboard"));
+const Portfolio = lazy(() => import("@/pages/Portfolio"));
+const OptionChain = lazy(() => import("@/pages/OptionChain"));
+const SpotTrading = lazy(() => import("@/pages/SpotTrading"));
+const MarketData = lazy(() => import("@/pages/MarketData"));
+const DesignArchitecture = lazy(() => import("@/pages/DesignArchitecture"));
+const PartnersContracts = lazy(() => import("@/pages/PartnersContracts"));
+const OnchainTx = lazy(() => import("@/pages/OnchainTx"));
+const Wallet = lazy(() => import("@/pages/Wallet"));
+const Education = lazy(() => import("@/pages/Education"));
+const Testing = lazy(() => import("@/pages/Testing"));
+const Login = lazy(() => import("@/pages/Login"));
+const Register = lazy(() => import("@/pages/Register"));
+const Admin = lazy(() => import("@/pages/Admin"));
+const AdminFeedback = lazy(() => import("@/pages/AdminFeedback"));
+const AdminReconciliation = lazy(() => import("@/pages/AdminReconciliation"));
+const AdminIndex = lazy(() => import("@/pages/AdminIndex"));
+const RiskDashboard = lazy(() => import("@/pages/RiskDashboard"));
+const AdminPartners = lazy(() => import("@/pages/AdminPartners"));
+const AdminFees = lazy(() => import("@/pages/AdminFees"));
+const AdminAudit = lazy(() => import("@/pages/AdminAudit"));
+const IndexDetail = lazy(() => import("@/pages/IndexDetail"));
+const Feedback = lazy(() => import("@/pages/Feedback"));
+const ForwardMarket = lazy(() => import("@/pages/ForwardMarket"));
+const OptionForwardChainPage = lazy(() => import("@/pages/OptionForwardChainPage"));
+const AdminWaitlist = lazy(() => import("@/pages/AdminWaitlist"));
+const Arbitrage = lazy(() => import("@/pages/Arbitrage"));
+const NotFound = lazy(() => import("@/pages/not-found"));
+const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPolicy"));
+const TermsOfUse = lazy(() => import("@/pages/TermsOfUse"));
+const RiskDisclosure = lazy(() => import("@/pages/RiskDisclosure"));
+const DeckPage = lazy(() => import("@/pages/Deck"));
+const MonitorPage = lazy(() => import("@/pages/Monitor"));
+const MonitorV3Page = lazy(() => import("@/pages/MonitorV3"));
+const SpikeMonitorPage = lazy(() => import("@/pages/SpikeMonitor"));
+const Last30DaysPage = lazy(() => import("@/pages/Last30Days"));
 
 function RedirectToEducation() {
   const [, setLocation] = useLocation();
@@ -64,6 +65,7 @@ function RedirectToEducationFaq() {
 
 function Router() {
   return (
+    <Suspense fallback={<div className="min-h-screen bg-background" aria-busy="true" />}>
     <Switch>
       <Route path="/" component={Dashboard} />
       <Route path="/portfolio" component={Portfolio} />
@@ -110,6 +112,7 @@ function Router() {
       <Route path="/monitor-legacy/" component={MonitorPage} />
       <Route component={NotFound} />
     </Switch>
+    </Suspense>
   );
 }
 

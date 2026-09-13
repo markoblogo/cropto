@@ -4,6 +4,7 @@
  */
 
 import * as cheerio from "cheerio";
+import { describe, expect, it } from "@jest/globals";
 import type { IgcPrice } from "../server/services/igcPriceService";
 
 // Sample HTML table structure (simplified example based on IGC structure)
@@ -138,12 +139,9 @@ describe("IGC Price Service", () => {
         }
 
         const year = parts.length >= 3 ? parseInt(parts[2], 10) : new Date().getFullYear();
-        const date = new Date(year, month, day);
+        const date = new Date(Date.UTC(year, month, day));
         return date.toISOString().split("T")[0];
       };
-
-      const today = new Date();
-      const currentYear = today.getFullYear();
 
       expect(parseDate("1 Jan")).toMatch(/^\d{4}-01-01$/);
       expect(parseDate("15 Dec")).toMatch(/^\d{4}-12-15$/);
@@ -181,4 +179,3 @@ describe("IGC Price Service", () => {
     });
   });
 });
-
