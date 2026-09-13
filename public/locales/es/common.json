@@ -159,9 +159,11 @@
       "cta": {
         "startIndexTrading": "Ver demo técnica",
         "startOptionsTrading": "Explorar mercados indexados",
-        "viewMarkets": "Explorar ecosistema AMI",
+        "viewMarkets": "Ver datos de mercado",
         "connectWallet": "Conectar billetera",
-        "walletConnected": "Billetera: conectada"
+        "walletConnected": "Billetera: conectada",
+        "viewDeck": "Abrir deck para socios",
+        "feedback": "Enviar feedback"
       },
       "body": "Cropto conecta índices locales de commodities, contratos del mercado físico y flujos programables de liquidación. Está diseñado para workflows spot y de opciones sobre commodities agrícolas e instrumentos vinculados a índices, usando datos benchmark de 1D3X/SPIKE como infraestructura de referencia.",
       "blockchainClarification": "Su capa blockchain no trata de especulación cripto. Se usa para verificación documental, registros de estado contractual, trazabilidad de liquidación y clearing tokenizado opcional."
@@ -172,7 +174,7 @@
       "description": "Cropto está temporalmente en mantenimiento. Continúan disponibles los datos de mercado, reportes y flujos de demo técnica, mientras los flujos de trading productivo están deshabilitados hasta completar la validación de riesgos y operaciones.",
       "stateLine": "Modo actual: monitoreo del mercado en read-only con revisión manual.",
       "refreshLine": "Actualización de índices: cada 15 minutos (según programación).",
-      "lastChecked": "Última revisión del estado: julio de 2026.",
+      "lastChecked": "Estado revisado el 13 de septiembre de 2026.",
       "actions": {
         "deck": "Ver deck de demo",
         "market": "Abrir el panel de mercado",
@@ -2139,5 +2141,11 @@
   "geo.dismiss": "No volver a mostrar",
   "actions": {
     "mint": "Crear registro de verificación"
+  },
+  "demoBanner": {
+    "message": "es un prototipo mantenido. Los datos de mercado y las demos técnicas están disponibles; el trading de producción está pausado.",
+    "market": "Ver datos de mercado",
+    "feedback": "Enviar feedback",
+    "dismiss": "Cerrar aviso de estado"
   }
 }

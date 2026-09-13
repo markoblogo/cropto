@@ -159,9 +159,11 @@
       "cta": {
         "startIndexTrading": "Ver demo técnica",
         "startOptionsTrading": "Explorar mercados indexados",
-        "viewMarkets": "Explorar ecossistema AMI",
+        "viewMarkets": "Ver dados de mercado",
         "connectWallet": "Conectar carteira",
-        "walletConnected": "Carteira: conectada"
+        "walletConnected": "Carteira: conectada",
+        "viewDeck": "Abrir deck para parceiros",
+        "feedback": "Enviar feedback"
       },
       "body": "A Cropto conecta índices locais de commodities, contratos do mercado físico e fluxos programáveis de liquidação. Foi desenhada para workflows spot e de opções em commodities agrícolas e instrumentos vinculados a índices, usando dados benchmark da 1D3X/SPIKE como infraestrutura de referência.",
       "blockchainClarification": "Sua camada blockchain não é sobre especulação cripto. Ela é usada para verificação documental, registros de estado contratual, rastreabilidade de liquidação e clearing tokenizado opcional."
@@ -172,7 +174,7 @@
       "description": "A Cropto está em modo de manutenção temporário. Dados de mercado, relatórios e fluxos de demo técnica continuam ativos, enquanto os fluxos de trading de produção permanecem desativados até a finalização das validações operacionais.",
       "stateLine": "Modo atual: monitoramento de mercado em read-only com revisão manual.",
       "refreshLine": "Atualização do índice: a cada 15 minutos (cronograma).",
-      "lastChecked": "Última verificação de status: julho de 2026.",
+      "lastChecked": "Status revisado em 13 de setembro de 2026.",
       "actions": {
         "deck": "Ver deck de demo",
         "market": "Abrir painel de mercado",
@@ -2139,5 +2141,11 @@
   "geo.dismiss": "Não mostrar novamente",
   "actions": {
     "mint": "Criar registro de verificação"
+  },
+  "demoBanner": {
+    "message": "é um protótipo mantido. Dados de mercado e demos técnicas estão disponíveis; a negociação em produção está pausada.",
+    "market": "Ver dados de mercado",
+    "feedback": "Enviar feedback",
+    "dismiss": "Fechar aviso de status"
   }
 }

@@ -1,6 +1,7 @@
 node_modules
 dist
 .cortex
+.lazyweb/
 .DS_Store
 Thumbs.db
 Desktop.ini

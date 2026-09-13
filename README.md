@@ -1,9 +1,40 @@
 # Cropto
 
+[![CI](https://github.com/markoblogo/cropto/actions/workflows/ci.yml/badge.svg?branch=release%2Fdemo)](https://github.com/markoblogo/cropto/actions/workflows/ci.yml)
+[![Live verification](https://github.com/markoblogo/cropto/actions/workflows/live.yml/badge.svg?branch=release%2Fdemo)](https://github.com/markoblogo/cropto/actions/workflows/live.yml)
 [![Node.js](https://img.shields.io/badge/node-22.x-brightgreen)](https://nodejs.org/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](./LICENSE)
 
-Cropto is indexed trading and settlement infrastructure for agricultural commodities.
+**Indexed market data, document verification, and settlement infrastructure for agricultural commodities.**
+
+[Open the live prototype](https://cr0pto.com) · [View the partner deck](https://cr0pto.com/deck) · [Read product status](./PRODUCT_STATUS.md)
+
+![Cropto commodity market infrastructure](./client/public/cropto-cover.png)
+
+> **Maintained prototype:** market data, reporting, and technical demo surfaces remain available. Production trading is paused. Cropto is not a regulated trading venue.
+
+## Status at a Glance
+
+| Surface | Status | Intended use |
+| --- | --- | --- |
+| Public market data and reports | Available | Evaluation and market monitoring |
+| Indexed spot/options/forward workflows | Prototype | Technical demonstrations |
+| Document and settlement records | Prototype | Partner architecture review |
+| Production trading and clearing | Paused | Requires partner, legal, and operational readiness |
+
+## Quick Start
+
+```bash
+git clone https://github.com/markoblogo/cropto.git
+cd cropto
+npm ci
+cp .env.example .env
+npm run dev
+```
+
+The minimum local configuration is `DATABASE_URL`, `SESSION_SECRET`, and `JWT_SECRET`. Run `npm run verify` before opening a pull request. See [DEMO.md](./DEMO.md) for a guided product tour and [docs/README.md](./docs/README.md) for deeper operator documentation.
+
+## Why Cropto Exists
 
 Cropto is the trade, document and settlement layer of the AMI ecosystem. It is designed for spot and options workflows on agricultural commodities and local commodity indices, using 1D3X/SPIKE benchmark data as reference infrastructure.
 
@@ -19,7 +50,7 @@ settlement, token, wallet or clearing controls.
 
 Standalone development is currently paused while the AMI ecosystem expands through MN7R, 1D3X and SPIKE. The codebase remains functional and can be revived for partner-backed indexed trading and settlement pilots.
 
-## Links
+## Product Links
 
 - Live site: [https://cr0pto.com](https://cr0pto.com)
 - Investor deck: [https://cr0pto.com/deck](https://cr0pto.com/deck)
@@ -239,7 +270,9 @@ npm run dev:jobs
 ```bash
 npm run check
 npm run i18n:check
+npm test
 npm run build
+npm run verify
 npm audit --omit=dev
 ```
 
@@ -267,7 +300,7 @@ npm run e2e:smoke
 - Full local development requires a configured database and feature-specific env values.
 - Telegram, Sheets and on-chain flows are feature-scoped integrations; configure only the modules being tested.
 - Legal/regulatory architecture is intentionally not finalized in this repository.
-- Dependency audit still has residual risk from major-version migrations or no-fix packages: `drizzle-orm`, `nodemailer`, Hardhat toolchain transitive dependencies and `xlsx`. Treat these as tracked follow-up migrations rather than silent production acceptance.
+- Dependency audit still has residual risk from the Express 5 migration path and the no-fix npm release of `xlsx`. Hardhat-only findings are isolated to development tooling. See [SECURITY.md](./SECURITY.md) and [SECURITY_REPORT.md](./SECURITY_REPORT.md).
 
 ## Operational Hardening Baseline
 
@@ -280,7 +313,7 @@ npm run e2e:smoke
 
 ## Contribution / Working Notes
 
-- This is an internal product repository, not a polished OSS package.
+- This is a maintained prototype and partner-evaluation repository.
 - Before changing behavior, verify route/script/runbook coupling.
 - Treat monitor formatting, dictionaries and Telegram templates as product-critical operational logic.
 - Keep public positioning aligned with AMI: indexed commodity workflows, document verification, settlement traceability and chain-optional infrastructure.

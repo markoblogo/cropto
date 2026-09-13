@@ -1,74 +1,38 @@
-# Security Implementation Report
+# Security Engineering Status
 
-**Date**: 2025-11-08  
-**Task**: Block SERVICE_ROLE_KEY client usage + Audit logging + E2E smoke tests
+**Reviewed:** 2026-09-13
+**Scope:** maintained prototype and partner-evaluation deployment
 
-## ✅ Implementation Complete
+This document records implemented safeguards and known residual work. It is not a production-readiness certification.
 
-### 1. Security Middleware
-- **File**: `server/middleware/blockServiceRole.ts`
-- **Function**: Blocks client attempts to use SERVICE_ROLE_KEY
-- **Response**: HTTP 403 Forbidden
-- **Status**: ✅ Active
+## Implemented safeguards
 
-### 2. Audit Logging
-- **File**: `server/utils/auditLog.ts`
-- **Log file**: `logs/audit.log`
-- **Events tracked**:
-  - `SECURITY:SERVICE_ROLE_BLOCKED` - Client attempt to use service role
-  - `AUTH:LOGIN` - User authentication
-  - IP address tracking
-  - Timestamp (ISO 8601)
-- **Status**: ✅ Working
+- Public registration grants only the base user role; privileged roles require controlled operator flows.
+- Client attempts to supply service-role credentials are blocked.
+- JWT authentication and user-scoped wallet access are enforced server-side.
+- Production job endpoints require `JOB_RUNNER_SECRET`.
+- API, authentication, and upload routes use process-local rate limits.
+- Feedback uploads are MIME- and size-restricted and served with hardened static headers.
+- Responses suppress `X-Powered-By`, deny framing, restrict browser permissions, and enable HSTS in production.
+- Operational security events are written to the audit log.
 
-### 3. E2E Smoke Tests
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 SMOKE TEST RESULTS
+## Dependency status
 
-✅ Healthcheck /api/health [200]
-✅ Block SERVICE_ROLE_KEY from client [403]
-✅ Login farmer@demo [200]
-✅ GET /api/wallet/me with JWT [200]
-✅ Reject unauthorized requests [401]
-✅ Portfolio user isolation [200]
+The September 2026 pass upgraded `maplibre-gl`, `drizzle-orm`, and `nodemailer`, removing the previously reported critical production advisory. Hardhat and Jest tooling are isolated in development dependencies.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Total: 6 | Pass: 6 | Fail: 0
-```
+`npm audit --omit=dev` still reports issues in two direct dependency paths:
 
-**Status**: ✅ 6/6 PASSED
+- Express 4 transitive advisories require an evaluated Express 5 migration.
+- The npm release of `xlsx` has a high-severity advisory with no published npm fix. It remains limited to explicit spreadsheet import/export paths and should be replaced before regulated or untrusted-file production use.
 
-### 4. Sample Audit Log Entry
-```json
-{
-  "timestamp": "2025-11-08T12:27:15.770Z",
-  "event": "SECURITY:SERVICE_ROLE_BLOCKED",
-  "ip": "127.0.0.1",
-  "details": {
-    "path": "/api/wallet/me",
-    "method": "GET"
-  }
-}
-```
+Use the current audit output as the source of truth; registry advisories change over time.
 
-## 🔒 Security Status
+## Required before production use
 
-| Component | Status | Notes |
-|-----------|--------|-------|
-| SERVICE_ROLE_KEY blocking | ✅ Active | Middleware enforced |
-| Audit logging | ✅ Active | File-based logs |
-| User authentication | ✅ Working | JWT-based |
-| User isolation | ✅ Working | App-level enforcement |
-| Unauthorized access | ✅ Blocked | HTTP 401 |
+1. Complete an independent application and infrastructure security review.
+2. Replace or isolate `xlsx` and complete the Express 5 migration.
+3. Move rate limiting and security-event retention to shared durable infrastructure.
+4. Add secret rotation, incident response, log retention, and alerting procedures.
+5. Review trading, settlement, wallet, token, privacy, and compliance controls with qualified partners.
 
-## 📋 Next Steps (Optional)
-- [ ] Monitor audit.log for security events
-- [ ] Set up log rotation for production
-- [ ] Add alerting for repeated SERVICE_ROLE_KEY attempts
-- [ ] Review audit logs periodically
-
----
-**Implementation Time**: ~5 minutes  
-**Tests Run**: 6/6 passed  
-**Security Level**: Production-ready
+Report vulnerabilities privately through GitHub as described in [SECURITY.md](./SECURITY.md).

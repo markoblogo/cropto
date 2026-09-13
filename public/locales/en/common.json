@@ -161,9 +161,11 @@
       "cta": {
         "startIndexTrading": "View Technical Demo",
         "startOptionsTrading": "Explore Indexed Markets",
-        "viewMarkets": "Explore AMI Ecosystem",
+        "viewMarkets": "View market data",
         "connectWallet": "Connect Wallet",
-        "walletConnected": "Wallet: Connected"
+        "walletConnected": "Wallet: Connected",
+        "viewDeck": "Open partner deck",
+        "feedback": "Send feedback"
       }
     },
     "lifecycle": {
@@ -172,7 +174,7 @@
       "description": "Cropto is temporarily in maintenance mode. Core market data, reporting, and technical demo workflows remain available, while production trading workflows are intentionally disabled until readiness checks are finalized.",
       "stateLine": "Current mode: read-only market monitoring with manual review path.",
       "refreshLine": "Benchmark refresh: every 15 minutes (scheduled).",
-      "lastChecked": "Last status check completed in July 2026.",
+      "lastChecked": "Status reviewed on September 13, 2026.",
       "actions": {
         "deck": "Explore Demo Deck",
         "market": "Open Market Dashboard",
@@ -1694,7 +1696,7 @@
   },
   "faq": {
     "title": "Frequently Asked Questions",
-      "subtitle": "Common questions about Cropto's indexed commodity-market infrastructure prototype",
+    "subtitle": "Common questions about Cropto's indexed commodity-market infrastructure prototype",
     "q1": {
       "question": "What is Cropto?",
       "answer": "Cropto is a prototype platform for trading and risk management of commodity-linked instruments. It uses price indexes and cash settlement (in CROPT) and does not involve physical delivery of grain."
@@ -2119,5 +2121,11 @@
   "language.name.uk": "Ukrainian",
   "language.name.es": "Spanish",
   "language.name.pt": "Portuguese",
-  "geo.dismiss": "Don't show again"
+  "geo.dismiss": "Don't show again",
+  "demoBanner": {
+    "message": "is a maintained prototype. Market data and technical demos are available; production trading is paused.",
+    "market": "View market data",
+    "feedback": "Send feedback",
+    "dismiss": "Dismiss status banner"
+  }
 }

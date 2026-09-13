@@ -20,6 +20,7 @@ import { getCanonicalHost, getLegacyHosts, getPublicAppUrl } from "./config/doma
 import { startEventLoopWatchdog } from "./utils/eventLoopWatchdog";
 
 const app = express();
+app.disable("x-powered-by");
 
 declare module 'http' {
   interface IncomingMessage {
@@ -159,7 +160,7 @@ app.use((req, res, next) => {
   const port = parseInt(process.env.PORT || '5000', 10);
   const host = process.env.HOST || "0.0.0.0";
   const listenOptions =
-    process.env.NODE_ENV === "production"
+    process.env.NODE_ENV === "production" && process.env.SO_REUSEPORT === "1"
       ? { port, host, reusePort: true }
       : { port, host };
 

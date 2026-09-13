@@ -2,7 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Info, Maximize2, Minimize2, Moon, Pin, Plus, Sun, X } from "lucide-react";
 import { useTheme } from "next-themes";
-import maplibregl, { type GeoJSONSource, type Map as MapLibreMap, type Popup as MapLibrePopup } from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
+import { type GeoJSONSource, type Map as MapLibreMap, type Popup as MapLibrePopup } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { cn } from "@/lib/utils";
 
@@ -4196,16 +4197,15 @@ export default function MonitorV3Page() {
           } catch {
             eventsRows = [];
           }
-          if (!heroMapPopupRef.current) {
-            heroMapPopupRef.current = new maplibregl.Popup({
+          const popup = heroMapPopupRef.current ?? new maplibregl.Popup({
               closeButton: false,
               closeOnClick: true,
               offset: 12,
               maxWidth: "420px",
               className: "monitor-map-popup",
             });
-          }
-          heroMapPopupRef.current
+          heroMapPopupRef.current = popup;
+          popup
             .setLngLat(coords)
             .setHTML(
               buildAgriEventsPopupHtml({
@@ -4217,16 +4217,15 @@ export default function MonitorV3Page() {
             .addTo(map);
           return;
         }
-        if (!heroMapPopupRef.current) {
-          heroMapPopupRef.current = new maplibregl.Popup({
+        const popup = heroMapPopupRef.current ?? new maplibregl.Popup({
             closeButton: false,
             closeOnClick: true,
             offset: 12,
             maxWidth: "420px",
             className: "monitor-map-popup",
           });
-        }
-        heroMapPopupRef.current
+        heroMapPopupRef.current = popup;
+        popup
           .setLngLat(coords)
           .setHTML(
             `<div style="font-size:12px;line-height:1.2;"><div style="font-weight:600;color:#e2e8f0;">${String(props.label || "Point")}</div><div style="color:#94a3b8;margin-top:2px;">${String(props.value || "")}</div></div>`,
@@ -4307,31 +4306,29 @@ export default function MonitorV3Page() {
             return;
           }
           if (point.layer === "events") {
-            if (!heroMapPopupRef.current) {
-              heroMapPopupRef.current = new maplibregl.Popup({
+            const popup = heroMapPopupRef.current ?? new maplibregl.Popup({
                 closeButton: false,
                 closeOnClick: true,
                 offset: 12,
                 maxWidth: "420px",
                 className: "monitor-map-popup",
               });
-            }
-            heroMapPopupRef.current
+            heroMapPopupRef.current = popup;
+            popup
               .setLngLat([point.lon, point.lat])
               .setHTML(buildAgriEventsPopupHtml({ label: point.label, value: point.value, events: point.events || [] }))
               .addTo(map);
             return;
           }
-          if (!heroMapPopupRef.current) {
-            heroMapPopupRef.current = new maplibregl.Popup({
+          const popup = heroMapPopupRef.current ?? new maplibregl.Popup({
               closeButton: false,
               closeOnClick: true,
               offset: 12,
               maxWidth: "420px",
               className: "monitor-map-popup",
             });
-          }
-          heroMapPopupRef.current
+          heroMapPopupRef.current = popup;
+          popup
             .setLngLat([point.lon, point.lat])
             .setHTML(
               `<div style="font-size:12px;line-height:1.2;"><div style="font-weight:600;color:#e2e8f0;">${point.label}</div><div style="color:#94a3b8;margin-top:2px;">${point.value}</div></div>`,

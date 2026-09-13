@@ -19,18 +19,18 @@ jobs:
 
     steps:
       - name: Checkout release/demo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: release/demo
           fetch-depth: 0
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: "22"
 
@@ -43,7 +43,8 @@ jobs:
         run: |
           mkdir -p "$HOME/.agents/skills"
           rm -rf "$HOME/.agents/skills/last30days"
-          git clone https://github.com/mvanhorn/last30days-skill.git "$HOME/.agents/skills/last30days"
+          git clone --no-checkout --filter=blob:none https://github.com/mvanhorn/last30days-skill.git "$HOME/.agents/skills/last30days"
+          git -C "$HOME/.agents/skills/last30days" checkout --detach ac0ed3b7f610ec64cc898349d1e4507cd6220942
 
       - name: Refresh snapshots
         env:
@@ -78,7 +79,7 @@ jobs:
       - name: Generate precomputed AI summaries
         env:
           LAST30DAYS_OUTPUT_DIR: artifacts/last30days
-          LAST30DAYS_MONITOR_CONTEXT_URL: https://cropto.abvx.xyz/api/market-dashboard?debugSources=1
+          LAST30DAYS_MONITOR_CONTEXT_URL: https://cr0pto.com/api/market-dashboard?debugSources=1
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LAST30DAYS_AI_MODEL: gpt-4.1-mini
         run: |

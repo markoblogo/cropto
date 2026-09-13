@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Wallet, ArrowRightCircle, BarChart3, Eye } from "lucide-react";
+import { BarChart3, FileText, MessageSquare } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "wouter";
 
@@ -11,29 +11,15 @@ interface HeroProps {
   onOpenWalletModal?: () => void;
 }
 
-const formatAddress = (address: string) => {
-  return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
-};
-
 export function Hero({
   onCreateOption: _onCreateOption,
-  onConnectWallet,
-  walletAddress,
+  onConnectWallet: _onConnectWallet,
+  walletAddress: _walletAddress,
   onOpenLogin: _onOpenLogin,
   onOpenWalletModal: _onOpenWalletModal,
 }: HeroProps) {
   const { t } = useTranslation();
   const [location, setLocation] = useLocation();
-
-  // Start Index Trading → forward market (forward orderbook)
-  const navigateToForwardMarket = () => {
-    setLocation("/forward-market");
-  };
-
-  // Start Options Trading → options chain
-  const navigateToOptions = () => {
-    setLocation("/options");
-  };
 
   // View Markets → scroll to Market Dashboard section on homepage (or navigate to home if not on home)
   const navigateToMarketDashboard = () => {
@@ -98,58 +84,37 @@ export function Hero({
           </div>
 
           <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 md:pl-[7rem]">
-            {/* Four CTA buttons: light amber -> deep green */}
             <Button
               size="lg"
               className="w-full sm:w-auto font-semibold bg-amber-200 text-amber-950 hover:bg-amber-300 shadow-sm"
-              onClick={navigateToForwardMarket}
-              data-testid="button-hero-start-index-trading"
-            >
-              <BarChart3 className="mr-2 h-5 w-5" />
-              {t('home.hero.cta.startIndexTrading')}
-            </Button>
-
-            <Button
-              size="lg"
-              className="w-full sm:w-auto font-semibold bg-amber-300 text-amber-950 hover:bg-amber-400 shadow-sm"
-              onClick={navigateToOptions}
-              data-testid="button-hero-start-options-trading"
-            >
-              <ArrowRightCircle className="mr-2 h-5 w-5" />
-              {t('home.hero.cta.startOptionsTrading')}
-            </Button>
-
-            <Button
-              size="lg"
-              className="w-full sm:w-auto font-semibold bg-lime-400 text-emerald-950 hover:bg-lime-500 shadow-sm"
               onClick={navigateToMarketDashboard}
               data-testid="button-hero-view-markets"
             >
-              <Eye className="mr-2 h-5 w-5" />
+              <BarChart3 className="mr-2 h-5 w-5" />
               {t('home.hero.cta.viewMarkets')}
             </Button>
 
-            {walletAddress ? (
-              <Button
-                size="lg"
-                className="w-full sm:w-auto font-semibold font-mono bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm"
-                onClick={onConnectWallet}
-                data-testid="badge-hero-wallet-connected"
-              >
-                <Wallet className="mr-2 h-5 w-5" />
-                {t('home.hero.cta.walletConnected')}
-              </Button>
-            ) : (
-              <Button
-                size="lg"
-                className="w-full sm:w-auto font-semibold font-mono bg-emerald-500 text-white hover:bg-emerald-600 shadow-sm"
-                onClick={onConnectWallet}
-                data-testid="button-hero-connect-wallet"
-              >
-                <Wallet className="mr-2 h-5 w-5" />
-                {t('home.hero.cta.connectWallet')}
-              </Button>
-            )}
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full border-white/30 bg-black/25 text-white hover:bg-white/10 hover:text-white sm:w-auto"
+              onClick={() => setLocation("/deck")}
+              data-testid="button-hero-view-deck"
+            >
+              <FileText className="mr-2 h-5 w-5" />
+              {t('home.hero.cta.viewDeck')}
+            </Button>
+
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full border-white/30 bg-black/25 text-white hover:bg-white/10 hover:text-white sm:w-auto"
+              onClick={() => setLocation("/feedback")}
+              data-testid="button-hero-feedback"
+            >
+              <MessageSquare className="mr-2 h-5 w-5" />
+              {t('home.hero.cta.feedback')}
+            </Button>
           </div>
         </div>
 

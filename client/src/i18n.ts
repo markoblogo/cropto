@@ -2,21 +2,32 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import en from '../../public/locales/en/common.json';
-import uk from '../../public/locales/uk/common.json';
-import es from '../../public/locales/es/common.json';
-import pt from '../../public/locales/pt/common.json';
+const localeLoaders: Record<string, () => Promise<{ default: Record<string, unknown> }>> = {
+  en: () => import('../../public/locales/en/common.json'),
+  uk: () => import('../../public/locales/uk/common.json'),
+  es: () => import('../../public/locales/es/common.json'),
+  pt: () => import('../../public/locales/pt/common.json'),
+};
+
+const dynamicLocaleBackend = {
+  type: 'backend' as const,
+  init: () => undefined,
+  read: async (language: string, _namespace: string, callback: (error: Error | null, data?: Record<string, unknown>) => void) => {
+    try {
+      const loader = localeLoaders[language] || localeLoaders.en;
+      const module = await loader();
+      callback(null, module.default);
+    } catch (error) {
+      callback(error instanceof Error ? error : new Error('Unable to load locale'));
+    }
+  },
+};
 
 i18n
+  .use(dynamicLocaleBackend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    resources: { 
-      en: { common: en }, 
-      uk: { common: uk },
-      es: { common: es },
-      pt: { common: pt }
-    },
     supportedLngs: ['en', 'uk', 'es', 'pt'],
     nonExplicitSupportedLngs: true,
     load: 'languageOnly',
