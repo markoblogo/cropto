@@ -10,7 +10,7 @@ concurrency:
 on:
   workflow_dispatch:
   push:
-    branches: ['**']
+    branches: [release/demo]
   pull_request:
     branches: ['**']
 
