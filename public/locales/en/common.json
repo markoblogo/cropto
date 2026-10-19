@@ -1771,6 +1771,7 @@
     }
   },
   "footer": {
+    "createdBy": "Created by ABVX",
     "tagline": "Trade Commodities. On-Chain.",
     "description": "Prototype platform for commodity derivatives trading. For demonstration and testing purposes only.",
     "indexTrading": "Index Trading",
