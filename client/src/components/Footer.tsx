@@ -5,6 +5,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { Badge } from "@/components/ui/badge";
 import { FileText } from "lucide-react";
 import { ThemeAwareLogo } from "@/components/ThemeAwareLogo";
+import { FooterBrands } from "@/components/FooterBrands";
 
 const COUNTRY_FLAGS = [
   { code: "ua", flag: "🇺🇦" },
@@ -208,26 +209,30 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-3 flex flex-col gap-1.5 border-t border-border/60 pt-2.5 text-xs text-foreground/65 md:flex-row md:items-center md:justify-between">
-          <div className="flex flex-wrap items-center gap-3">
-            <Link href="/privacy" className="transition-colors hover:text-foreground">
-              {t("footer.privacyPolicy")}
-            </Link>
-            <Link href="/terms" className="transition-colors hover:text-foreground">
-              {t("footer.termsOfUse")}
-            </Link>
-            <Link href="/risk-disclosure" className="transition-colors hover:text-foreground">
-              {t("footer.riskDisclosure")}
-            </Link>
-          </div>
-          <div className="text-right">
-            <p>© 2026 {t("site.title")}. {t("footer.allRightsReserved")}</p>
-            {showBuildInfo ? (
-              <p className="text-[11px]">
-                build: {versionInfo?.gitSha?.slice(0, 12) || "unknown"} · {versionInfo?.buildTime || "n/a"}
-              </p>
-            ) : null}
-          </div>
+        <div className="mt-3 border-t border-border/60 pt-3 text-xs text-foreground/65">
+          <FooterBrands>
+            <div className="flex flex-col gap-1.5 lg:flex-row lg:items-center lg:justify-between">
+              <div className="flex flex-wrap items-center gap-3">
+                <Link href="/privacy" className="transition-colors hover:text-foreground">
+                  {t("footer.privacyPolicy")}
+                </Link>
+                <Link href="/terms" className="transition-colors hover:text-foreground">
+                  {t("footer.termsOfUse")}
+                </Link>
+                <Link href="/risk-disclosure" className="transition-colors hover:text-foreground">
+                  {t("footer.riskDisclosure")}
+                </Link>
+              </div>
+              <div className="lg:text-right">
+                <p>© 2026 {t("site.title")}. {t("footer.allRightsReserved")}</p>
+                {showBuildInfo ? (
+                  <p className="text-[11px]">
+                    build: {versionInfo?.gitSha?.slice(0, 12) || "unknown"} · {versionInfo?.buildTime || "n/a"}
+                  </p>
+                ) : null}
+              </div>
+            </div>
+          </FooterBrands>
         </div>
       </div>
     </footer>

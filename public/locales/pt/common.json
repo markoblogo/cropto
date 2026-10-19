@@ -1788,6 +1788,7 @@
     }
   },
   "footer": {
+    "createdBy": "Created by ABVX",
     "tagline": "Negocie commodities. On-chain.",
     "description": "Plataforma protótipo para negociação de derivativos de commodities. Apenas para demonstração e testes.",
     "indexTrading": "Negociação de índices",

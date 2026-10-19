@@ -1788,6 +1788,7 @@
     }
   },
   "footer": {
+    "createdBy": "Created by ABVX",
     "tagline": "Opera commodities. On-chain.",
     "description": "Plataforma prototipo para el trading de derivados sobre commodities. Solo para demostración y pruebas.",
     "indexTrading": "Trading de índices",
